@@ -7,11 +7,14 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-io.on('connection', (socket) => {                                                          //this gets copied for every socket created and socketid is unique for every socket form
+io.on('connection', (socket) => {                                    //this gets copied for every socket created
+                                                                       // and socketid is unique for every socket form
     console.log('New socket formed from: '+ socket.id)
     socket.emit('connected')
     socket.on('msg', (data) => {
-        io.emit('recev_msg', data)
+        // io.emit('recev_msg', data)  used for sending to every connection
+        // socket.broadcast.emit sends it to only others not itself (client)
+        socket.broadcast.emit('recev_msg', data)
     })
 })
 
