@@ -13,6 +13,7 @@ $(function(){
         user = $('#login-id').val();
             $('#chat-box').show();
             $('#login-box').hide();
+            socket.emit('login', {user: user})
     })
 
         socket.on('recev_msg', (data) => {
